@@ -1,203 +1,151 @@
-# Cadastro de Pessoas
+# Cadastro de Pessoas — API REST Full Stack
 
-Projeto acadêmico simples para cadastrar e listar pessoas usando **Python**, **FastAPI**, **MySQL**, **Docker** e **GitHub**.
+Aplicação web completa para cadastro e listagem de pessoas, desenvolvida com **Python**, **FastAPI**, **MySQL** e **Docker**. Projeto de portfólio demonstrando integração entre backend, banco de dados, frontend e containerização.
 
-## Descrição do projeto
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-red)
 
-Esta aplicação permite:
+---
 
-- Cadastrar pessoas com **nome** e **e-mail**
-- Visualizar todas as pessoas cadastradas
+## Sobre o projeto
 
-A solução possui:
+Sistema CRUD básico (Create + Read) com arquitetura em camadas:
 
-- Uma **API REST** em Python (FastAPI)
-- Um **banco de dados MySQL**
-- Uma **página HTML** para interagir com a API
-- **Docker Compose** para subir tudo com um único comando
+- **Frontend:** página HTML com JavaScript consumindo a API via `fetch`
+- **Backend:** API REST com FastAPI e validação de dados (Pydantic)
+- **Banco de dados:** MySQL com SQLAlchemy ORM
+- **Infraestrutura:** Docker Compose com 2 containers (API + MySQL)
 
-## Tecnologias utilizadas
+Ideal para demonstrar conhecimentos em desenvolvimento backend, persistência de dados e DevOps básico.
 
-| Tecnologia | Função no projeto |
+---
+
+## Funcionalidades
+
+- Cadastro de pessoas (nome + e-mail)
+- Listagem de todas as pessoas cadastradas
+- Validação de e-mail e bloqueio de duplicatas
+- Documentação interativa automática (Swagger)
+- Ambiente containerizado — roda com um comando
+
+---
+
+## Tecnologias
+
+| Camada | Tecnologia |
 |---|---|
-| **Python** | Linguagem principal da API |
-| **FastAPI** | Framework para criar a API de forma simples |
-| **MySQL** | Banco de dados relacional |
-| **SQLAlchemy** | Biblioteca que conecta Python ao MySQL |
-| **Docker** | Empacota a aplicação em containers |
-| **Docker Compose** | Sobe a API e o MySQL juntos |
-| **HTML + JavaScript** | Página web para cadastro e listagem |
-| **Git / GitHub** | Controle de versão e publicação do código |
+| Backend | Python 3.11, FastAPI, Uvicorn |
+| Banco de dados | MySQL 8.0, SQLAlchemy, PyMySQL |
+| Frontend | HTML, CSS, JavaScript |
+| DevOps | Docker, Docker Compose |
+| Versionamento | Git, GitHub |
 
-## Estrutura de pastas
+---
+
+## Arquitetura
 
 ```
-pocgithub/
-├── app/
-│   ├── __init__.py      # Marca a pasta como pacote Python
-│   ├── main.py          # API FastAPI (rotas e inicialização)
-│   ├── database.py      # Conexão com o MySQL
-│   ├── models.py        # Tabela "pessoas" no banco
-│   └── schemas.py       # Validação dos dados de entrada/saída
-├── static/
-│   └── index.html       # Página web do cadastro
-├── Dockerfile           # Receita do container Python
-├── docker-compose.yml   # Orquestra API + MySQL
-├── requirements.txt     # Dependências Python
-├── .gitignore           # Arquivos que o Git deve ignorar
-└── README.md            # Este arquivo
+Navegador (HTML + JS)
+        │  HTTP (JSON)
+        ▼
+   API FastAPI (Python)
+        │  SQL
+        ▼
+     MySQL 8.0
 ```
 
-## Pré-requisitos
+**Containers Docker:**
 
-Você precisa ter instalado:
+| Container | Função | Porta |
+|---|---|---|
+| `api_cadastro` | API FastAPI | 8000 |
+| `mysql_cadastro` | Banco MySQL | 3306 |
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Windows ou Mac)
-- [Git](https://git-scm.com/downloads)
+---
 
-> **Nota:** Não é necessário instalar Python ou MySQL manualmente na sua máquina. O Docker cuida disso dentro dos containers.
-
-## Como instalar o Docker
-
-1. Acesse: https://www.docker.com/products/docker-desktop/
-2. Baixe o **Docker Desktop** para o seu sistema operacional
-3. Instale e reinicie o computador, se solicitado
-4. Abra o Docker Desktop e aguarde ele iniciar
-5. Teste no terminal:
-
-```bash
-docker --version
-docker compose version
-```
-
-Se os dois comandos mostrarem a versão, o Docker está pronto.
-
-## Como clonar o projeto do GitHub
-
-Depois de publicar o repositório no GitHub, qualquer pessoa pode baixar o projeto com:
-
-```bash
-git clone https://github.com/SEU_USUARIO/pocgithub.git
-cd pocgithub
-```
-
-Substitua `SEU_USUARIO` pelo seu usuário do GitHub.
-
-## Como executar o projeto
-
-Na pasta do projeto, execute:
-
-```bash
-docker compose up --build
-```
-
-O que esse comando faz:
-
-- `--build` → constrói a imagem da API
-- `up` → sobe os containers da API e do MySQL
-
-Na primeira execução, pode demorar alguns minutos para baixar as imagens.
-
-Para parar os containers, pressione `Ctrl + C` no terminal ou execute:
-
-```bash
-docker compose down
-```
-
-## Como acessar a aplicação
-
-Com os containers rodando, abra no navegador:
-
-- **Página web:** http://localhost:8000
-- **Documentação Swagger da API:** http://localhost:8000/docs
-
-### Endpoints da API
+## API Endpoints
 
 | Método | Rota | Descrição |
 |---|---|---|
-| `POST` | `/pessoas` | Cadastra uma nova pessoa |
+| `GET` | `/` | Página web |
+| `POST` | `/pessoas` | Cadastra uma pessoa |
 | `GET` | `/pessoas` | Lista todas as pessoas |
+| `GET` | `/docs` | Documentação Swagger |
 
-Exemplo de cadastro via Swagger ou curl:
+**Exemplo de requisição:**
 
 ```json
+POST /pessoas
 {
   "nome": "Maria Silva",
   "email": "maria@email.com"
 }
 ```
 
-## Como publicar no GitHub
+---
 
-### 1. Inicializar o repositório Git
+## Como executar
 
-```bash
-git init
-```
-
-Cria a pasta `.git` e começa a rastrear o projeto.
-
-### 2. Adicionar os arquivos
+**Pré-requisito:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado.
 
 ```bash
-git add .
+git clone https://github.com/mendgabriel/pocgithub.git
+cd pocgithub
+docker compose up --build
 ```
 
-Prepara todos os arquivos para o commit (exceto os listados no `.gitignore`).
+Acesse:
 
-### 3. Criar o primeiro commit
+- **Aplicação:** http://localhost:8000
+- **Swagger:** http://localhost:8000/docs
+
+Para parar:
 
 ```bash
-git commit -m "Primeiro commit: projeto de cadastro de pessoas"
+docker compose down
 ```
 
-Salva uma "foto" do projeto no histórico do Git.
+---
 
-### 4. Renomear a branch principal
+## Estrutura do projeto
 
-```bash
-git branch -M main
+```
+pocgithub/
+├── app/
+│   ├── main.py          # Rotas da API
+│   ├── database.py      # Conexão com MySQL
+│   ├── models.py        # Modelo da tabela pessoas
+│   └── schemas.py       # Validação Pydantic
+├── static/
+│   └── index.html       # Interface web
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
 ```
 
-Define `main` como nome da branch principal.
+---
 
-### 5. Conectar ao GitHub
+## Competências demonstradas
 
-Crie um repositório vazio no GitHub (sem README) e execute:
+- Desenvolvimento de API REST
+- Integração com banco de dados relacional (ORM)
+- Validação e tratamento de erros
+- Containerização com Docker
+- Versionamento com Git/GitHub
+- Documentação de projeto
 
-```bash
-git remote add origin https://github.com/SEU_USUARIO/pocgithub.git
-```
-
-Vincula o projeto local ao repositório remoto.
-
-### 6. Enviar o código
-
-```bash
-git push -u origin main
-```
-
-Envia o código para o GitHub.
-
-## Como qualquer pessoa pode executar
-
-Qualquer pessoa com Docker instalado pode rodar o projeto:
-
-1. Clonar o repositório
-2. Entrar na pasta do projeto
-3. Executar `docker compose up --build`
-4. Acessar http://localhost:8000
-
-Não é necessário configurar banco de dados manualmente.
-
-## Solução de problemas
-
-| Problema | Possível solução |
-|---|---|
-| Porta 8000 em uso | Pare outros serviços na porta 8000 ou altere a porta no `docker-compose.yml` |
-| Docker não encontrado | Verifique se o Docker Desktop está aberto |
-| Erro de conexão com MySQL | Aguarde o container `db` ficar saudável e rode `docker compose up --build` novamente |
+---
 
 ## Autor
 
-Projeto acadêmico — Cadastro de Pessoas com Python, FastAPI, MySQL e Docker.
+**Gabriel Mendonça** — [GitHub](https://github.com/mendgabriel)
+
+---
+
+## Licença
+
+Este projeto é de código aberto e está disponível para fins de estudo e portfólio.
