@@ -91,26 +91,91 @@ POST /pessoas
 
 ---
 
-## Como executar
+## Como executar localmente
 
-**Pré-requisito:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado.
+### Pré-requisitos
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado e em execução
+- [Git](https://git-scm.com/downloads) instalado
+
+> **Nota:** não é necessário instalar Python ou MySQL manualmente. O Docker cuida de tudo dentro dos containers.
+
+### 1. Instalar o Docker Desktop
+
+1. Acesse https://www.docker.com/products/docker-desktop/
+2. Baixe e instale para o seu sistema operacional
+3. Abra o Docker Desktop e aguarde o status **Engine running**
+4. Verifique no terminal:
+
+```bash
+docker --version
+docker compose version
+```
+
+### 2. Clonar o repositório
 
 ```bash
 git clone https://github.com/mendgabriel/pocgithub.git
 cd pocgithub
+```
+
+### 3. Build e execução
+
+Na pasta do projeto, execute:
+
+```bash
 docker compose up --build
 ```
 
-Acesse:
+| Flag / comando | O que faz |
+|---|---|
+| `--build` | Reconstrói a imagem da API (necessário na 1ª vez ou após mudanças no código) |
+| `up` | Sobe os containers da API e do MySQL |
 
-- **Aplicação:** http://localhost:8000
-- **Swagger:** http://localhost:8000/docs
+Na primeira execução, pode demorar alguns minutos para baixar as imagens do Python e MySQL.
 
-Para parar:
+Quando estiver pronto, você verá no terminal:
+
+```
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8000
+```
+
+### 4. Acessar a aplicação
+
+| Recurso | URL |
+|---|---|
+| Página web | http://localhost:8000 |
+| Documentação Swagger | http://localhost:8000/docs |
+
+### 5. Parar a aplicação
+
+No terminal onde o Docker está rodando, pressione `Ctrl + C` ou execute em outro terminal:
 
 ```bash
 docker compose down
 ```
+
+### 6. Executar em segundo plano (opcional)
+
+```bash
+docker compose up --build -d
+```
+
+Para ver os logs:
+
+```bash
+docker compose logs -f api
+```
+
+### Solução de problemas
+
+| Problema | Possível solução |
+|---|---|
+| Porta 8000 em uso | Pare outros serviços na porta 8000 ou altere a porta no `docker-compose.yml` |
+| Docker não encontrado | Verifique se o Docker Desktop está aberto |
+| Erro de conexão com MySQL | Aguarde o container `mysql_cadastro` ficar saudável e rode `docker compose up --build` novamente |
+| Erro WSL no Windows | Instale o WSL 2 com `wsl --install` e reinicie o computador |
 
 ---
 
