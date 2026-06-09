@@ -8,6 +8,10 @@ Aplicação web completa para cadastro e listagem de pessoas, desenvolvida com *
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-red)
 
+## Preview
+
+![Tela da aplicação — cadastro e listagem de pessoas](docs/screenshot.png)
+
 ---
 
 ## Sobre o projeto
