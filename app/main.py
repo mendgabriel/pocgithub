@@ -43,3 +43,13 @@ def criar_pessoa(pessoa: PessoaCreate, db: Session = Depends(get_db)):
 @app.get("/pessoas", response_model=list[PessoaResponse])
 def listar_pessoas(db: Session = Depends(get_db)):
     return db.query(Pessoa).order_by(Pessoa.id).all()
+
+
+@app.delete("/pessoas/{pessoa_id}", status_code=204)
+def excluir_pessoa(pessoa_id: int, db: Session = Depends(get_db)):
+    pessoa = db.query(Pessoa).filter(Pessoa.id == pessoa_id).first()
+    if not pessoa:
+        raise HTTPException(status_code=404, detail="Pessoa não encontrada.")
+
+    db.delete(pessoa)
+    db.commit()

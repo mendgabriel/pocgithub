@@ -73,6 +73,16 @@
             background-color: #2980b9;
         }
 
+        .btn-excluir {
+            background-color: #e74c3c;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        .btn-excluir:hover {
+            background-color: #c0392b;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -139,11 +149,12 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>E-mail</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="lista-pessoas">
                     <tr>
-                        <td colspan="3" class="vazio">Carregando...</td>
+                        <td colspan="4" class="vazio">Carregando...</td>
                     </tr>
                 </tbody>
             </table>
@@ -167,7 +178,7 @@
 
                 if (pessoas.length === 0) {
                     listaPessoas.innerHTML =
-                        '<tr><td colspan="3" class="vazio">Nenhuma pessoa cadastrada ainda.</td></tr>';
+                        '<tr><td colspan="4" class="vazio">Nenhuma pessoa cadastrada ainda.</td></tr>';
                     return;
                 }
 
@@ -178,13 +189,42 @@
                             <td>${pessoa.id}</td>
                             <td>${pessoa.nome}</td>
                             <td>${pessoa.email}</td>
+                            <td>
+                                <button type="button" class="btn-excluir" data-id="${pessoa.id}" data-nome="${pessoa.nome}">
+                                    Excluir
+                                </button>
+                            </td>
                         </tr>
                     `
                     )
                     .join("");
+
+                document.querySelectorAll(".btn-excluir").forEach((botao) => {
+                    botao.addEventListener("click", () => excluirPessoa(botao.dataset.id, botao.dataset.nome));
+                });
             } catch (erro) {
                 listaPessoas.innerHTML =
-                    '<tr><td colspan="3" class="vazio">Erro ao carregar pessoas.</td></tr>';
+                    '<tr><td colspan="4" class="vazio">Erro ao carregar pessoas.</td></tr>';
+            }
+        }
+
+        async function excluirPessoa(id, nome) {
+            const confirmar = window.confirm(`Deseja excluir o cadastro de ${nome}?`);
+            if (!confirmar) return;
+
+            try {
+                const resposta = await fetch(`/pessoas/${id}`, { method: "DELETE" });
+
+                if (!resposta.ok) {
+                    const dados = await resposta.json();
+                    mostrarMensagem(dados.detail || "Erro ao excluir.", "erro");
+                    return;
+                }
+
+                mostrarMensagem("Pessoa excluída com sucesso!", "sucesso");
+                carregarPessoas();
+            } catch (erro) {
+                mostrarMensagem("Não foi possível conectar à API.", "erro");
             }
         }
 
