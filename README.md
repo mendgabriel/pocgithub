@@ -31,6 +31,7 @@ Ideal para demonstrar conhecimentos em desenvolvimento backend, persistência de
 
 - Cadastro de pessoas (nome + e-mail)
 - Listagem de todas as pessoas cadastradas
+- Exclusão de cadastros com confirmação
 - Validação de e-mail e bloqueio de duplicatas
 - Documentação interativa automática (Swagger)
 - Ambiente containerizado — roda com um comando
@@ -77,6 +78,7 @@ Navegador (HTML + JS)
 | `GET` | `/` | Página web |
 | `POST` | `/pessoas` | Cadastra uma pessoa |
 | `GET` | `/pessoas` | Lista todas as pessoas |
+| `DELETE` | `/pessoas/{id}` | Exclui uma pessoa pelo ID |
 | `GET` | `/docs` | Documentação Swagger |
 
 **Exemplo de requisição:**
@@ -198,9 +200,25 @@ pocgithub/
 
 ---
 
+## Git Flow
+
+Este projeto utiliza **Git Flow** para organizar o desenvolvimento, simulando o fluxo de trabalho de equipes de TI.
+
+| Branch | Função |
+|---|---|
+| `main` | Código em produção (estável) |
+| `develop` | Integração de novas funcionalidades |
+| `feature/*` | Desenvolvimento de features isoladas |
+| `hotfix/*` | Correções urgentes em produção |
+
+Documentação completa: [GITFLOW.md](GITFLOW.md)
+
+---
+
 ## Competências demonstradas
 
 - Desenvolvimento de API REST
+- Git Flow e Pull Requests
 - Integração com banco de dados relacional (ORM)
 - Validação e tratamento de erros
 - Containerização com Docker
