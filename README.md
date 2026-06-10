@@ -10,13 +10,13 @@ Aplicação web completa para cadastro e listagem de pessoas, desenvolvida com *
 
 ## Preview
 
-![Tela da aplicação — cadastro e listagem de pessoas](docs/screenshot.png)
+![Tela da aplicação — cadastro, listagem e exclusão de pessoas](docs/screenshot.png)
 
 ---
 
 ## Sobre o projeto
 
-Sistema CRUD básico (Create + Read) com arquitetura em camadas:
+Sistema CRUD com cadastro, listagem e exclusão (Create, Read, Delete) e arquitetura em camadas:
 
 - **Frontend:** página HTML com JavaScript consumindo a API via `fetch`
 - **Backend:** API REST com FastAPI e validação de dados (Pydantic)
